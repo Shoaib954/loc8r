@@ -3,10 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "build": "cd app_public && npm run build",
+    "dev": "nodemon ./bin/www",
+    "postinstall": "cd app_public && npm install"
   },
   "dependencies": {
-    "archanaloc8r": "file:",
     "bcryptjs": "^3.0.2",
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
@@ -15,6 +17,8 @@
     "http-errors": "~1.6.3",
     "jade": "^0.29.0",
     "mongoose": "^8.5.3",
-    "morgan": "^1.10.1"
+    "morgan": "^1.10.1",
+    "dotenv": "^16.0.3",
+    "nodemon": "^2.0.20"
   }
 }

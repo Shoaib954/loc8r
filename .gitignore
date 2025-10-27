@@ -1,0 +1,9 @@
+node_modules/
+npm-debug.log*
+.env
+.DS_Store
+app_public/dist/
+app_public/build/
+*.log
+coverage/
+.nyc_output/

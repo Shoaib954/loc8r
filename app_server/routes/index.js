@@ -4,6 +4,7 @@ var ctrlLocations = require('../controllers/locations');
 var ctrlothers = require('../controllers/others');
 var ctrlmain = require('../controllers/main');
 var ctrlusers = require('../controllers/users');
+const mongoose = require('mongoose');
 
 // Simple admin authentication middleware
 function requireAdmin(req, res, next) {
@@ -82,12 +83,6 @@ router.post('/admin/set-admin/:id', requireAdmin, async function(req, res) {
         res.redirect('/admin?error=Failed to update user');
     }
 });
-var express = require('express'); 
-var router = express.Router(); 
-var ctrlLocations = require('../controllers/locations'); 
-var ctrlothers = require('../controllers/others'); 
-var ctrlmain = require('../controllers/main'); 
-var ctrlusers = require('../controllers/users');
 // Show review form for a specific location
 router.get('/locations/:locationid/review', function(req, res) {
     res.render('locations-review-form', {
@@ -99,6 +94,8 @@ router.get('/locations/:locationid/review', function(req, res) {
 // Show all reviews from all locations
 router.get('/all-reviews', async function(req, res) {
     try {
+        const mongoose = require('mongoose');
+        const Review = mongoose.model('Review');
         const reviews = await Review.find({}).sort({ date: -1 });
         res.render('all-reviews', { title: 'All Reviews', reviews, error: null });
     } catch (err) {
@@ -128,9 +125,7 @@ router.get('/profile', function(req, res) {
 router.get('/', ctrlLocations.locationList); 
 router.get('/locations', ctrlLocations.locationList); 
 router.get('/locations/:locationid', ctrlLocations.locationInfo);
-router.get('/review', ctrlLocations.addReview); 
-const mongoose = require('mongoose');
-const Review = mongoose.model('Review');
+router.get('/review', ctrlLocations.addReview);
 
 router.post('/review', async function(req, res) {
     const { name, email, rating, review, locationId } = req.body;
@@ -138,6 +133,7 @@ router.post('/review', async function(req, res) {
         return res.render('locations-review-form', { title: 'ADD REVIEW', error: 'All fields required.' });
     }
     try {
+        const Review = mongoose.model('Review');
         await Review.create({
             locationId,
             author: name,

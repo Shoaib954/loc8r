@@ -1,3 +1,4 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -22,7 +23,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
-	secret: 'loc8r_secret_key',
+	secret: process.env.SESSION_SECRET || 'loc8r_secret_key',
 	resave: false,
 	saveUninitialized: false
 }));
@@ -36,6 +37,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'app_public', 'build')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
