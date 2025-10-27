@@ -37,19 +37,10 @@ app.use(function(req, res, next) {
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'app_public', 'build')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api',indexApi)
-
-// Serve Angular app for unmatched routes
-app.get('*', function(req, res, next) {
-	if (req.path.startsWith('/api/')) {
-		return next();
-	}
-	res.sendFile(path.join(__dirname, 'app_public', 'build', 'index.html'));
-});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
