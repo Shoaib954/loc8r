@@ -4,15 +4,11 @@ block content
     .col-12 
   h1(style="margin-top:100px")  Review
   .row 
-    .col-12.col-md-8 
-      form(action="/review", method="post", role="form") 
-        .form-group.row
-          label.col-10.col-sm-2.col-form-label(for="locationId") Location
-          .col-12.col-sm-10
-            select#locationId.form-control(name="locationId")
-              option(value="starcups", selected=(typeof locationId !== 'undefined' && locationId==='starcups')) Starcups
-              option(value="cafe-hero", selected=(typeof locationId !== 'undefined' && locationId==='cafe-hero')) Cafe Hero
-              option(value="burger-queen", selected=(typeof locationId !== 'undefined' && locationId==='burger-queen')) Burger Queen
+    .col-12.col-md-8
+      if error
+        .alert.alert-danger= error
+      form(action="/locations/#{locationId}/review", method="post", role="form") 
+        input(type="hidden", name="locationId", value=locationId)
         .form-group.row 
           label.col-10.col-sm-2.col-form-label(for="name") Name 
           .col-12.col-sm-10 

@@ -12,9 +12,10 @@ module.exports.register = async function(req, res) {
         return res.render('register', { title: 'Register', error: 'Passwords do not match.' });
     }
     try {
-    const existingUser = await User.findOne({ username });
+        const existingUser = await User.findOne({ $or: [{ username }, { email }] });
         if (existingUser) {
-            return res.render('register', { title: 'Register', error: 'Username already exists.' });
+            const error = existingUser.username === username ? 'Username already exists.' : 'Email already exists.';
+            return res.render('register', { title: 'Register', error });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
     const user = new User({ username, email, password: hashedPassword });

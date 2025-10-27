@@ -1,14 +1,13 @@
 extends layout
 
 block content
- h1(style="margin-top:200px")
-  .container
+  .container(style="margin-top:100px")
     h1 Register now
     p.lead
-      | Sign in with your account. Don't have one?
-      a(href='/register') Register Now.
+      | Create a new account. Already have one?
+      a(href='/signin') Sign In.
     if error
-      p(style='color:red') #{error}
+      .alert.alert-danger= error
     form(action='/register', method='POST')
       .form-group
         label(for='username') Username

@@ -91,6 +91,38 @@ router.get('/locations/:locationid/review', function(req, res) {
     });
 });
 
+// Handle review form submission
+router.post('/locations/:locationid/review', async function(req, res) {
+    const { name, email, rating, review } = req.body;
+    const locationId = req.params.locationid;
+    
+    if (!name || !email || !rating || !review) {
+        return res.render('locations-review-form', { 
+            title: 'ADD REVIEW', 
+            locationId,
+            error: 'All fields required.' 
+        });
+    }
+    
+    try {
+        const Review = mongoose.model('Review');
+        await Review.create({
+            locationId,
+            author: name,
+            email,
+            rating: parseInt(rating),
+            text: review
+        });
+        return res.redirect('/locations/' + locationId);
+    } catch (err) {
+        return res.render('locations-review-form', { 
+            title: 'ADD REVIEW', 
+            locationId,
+            error: 'Failed to save review.' 
+        });
+    }
+});
+
 // Show all reviews from all locations
 router.get('/all-reviews', async function(req, res) {
     try {
