@@ -90,7 +90,11 @@ module.exports.locationInfo = async function(req, res){
   });
 };
 module.exports.addReview = function(req, res){
-  res.render('locations-review-form', { title: 'ADD REVIEW', locationId: req.query.locationId || '' });
+  res.render('locations-review-form', { 
+    title: 'ADD REVIEW', 
+    locationId: req.query.locationId || '',
+    error: null
+  });
 };
   
   

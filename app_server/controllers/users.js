@@ -18,11 +18,16 @@ module.exports.register = async function(req, res) {
             return res.render('register', { title: 'Register', error });
         }
         const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ username, email, password: hashedPassword });
+        const user = new User({ username, email, password: hashedPassword });
         await user.save();
         return res.redirect('/signin');
     } catch (err) {
-        return res.render('register', { title: 'Register', error: 'Registration failed.' });
+        console.error('Registration error:', err);
+        let errorMsg = 'Registration failed.';
+        if (err.code === 11000) {
+            errorMsg = err.keyPattern.username ? 'Username already exists.' : 'Email already exists.';
+        }
+        return res.render('register', { title: 'Register', error: errorMsg });
     }
 };
 

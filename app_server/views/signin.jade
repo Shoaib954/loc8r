@@ -6,7 +6,7 @@ block content
     p.lead
       | Sign in with your account. Don't have one?
       a(href='/register') Register Now.
-    if error
+    if typeof error !== 'undefined' && error
       .alert.alert-danger= error
     form(action='/signin', method='POST')
       .form-group
