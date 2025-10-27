@@ -8,6 +8,8 @@ block content
       a(href='/register') Register Now.
     if typeof error !== 'undefined' && error
       .alert.alert-danger= error
+    if typeof success !== 'undefined' && success
+      .alert.alert-success= success
     form(action='/signin', method='POST')
       .form-group
         label(for='username') Username

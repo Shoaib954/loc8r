@@ -164,7 +164,8 @@ router.get('/review', ctrlLocations.addReview);
 router.get('/about', ctrlothers.about); 
  
 router.get('/signin', function(req, res, next) {
-    res.render('signin', { title: 'Login', error: null });
+    const success = req.query.success === 'registered' ? 'Registration successful! Please login.' : null;
+    res.render('signin', { title: 'Login', error: null, success });
 });
 router.get('/register', function(req, res, next) { 
     res.render('register', { title: 'Register', error: null }); 
