@@ -159,25 +159,7 @@ router.get('/locations', ctrlLocations.locationList);
 router.get('/locations/:locationid', ctrlLocations.locationInfo);
 router.get('/review', ctrlLocations.addReview);
 
-router.post('/review', async function(req, res) {
-    const { name, email, rating, review, locationId } = req.body;
-    if (!name || !email || !rating || !review || !locationId) {
-        return res.render('locations-review-form', { title: 'ADD REVIEW', error: 'All fields required.' });
-    }
-    try {
-        const Review = mongoose.model('Review');
-        await Review.create({
-            locationId,
-            author: name,
-            email,
-            rating: parseInt(rating),
-            text: review
-        });
-        return res.redirect('/locations/' + locationId);
-    } catch (err) {
-        return res.render('locations-review-form', { title: 'ADD REVIEW', error: 'Failed to save review.' });
-    }
-});
+
  
 router.get('/about', ctrlothers.about); 
  
